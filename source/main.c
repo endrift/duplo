@@ -30,16 +30,16 @@ void dump(void) {
 		0x11, // Command
 		0, // ROM address
 		0x08001000, // Virtual address
-		0x1, // Size (in 0x200 byte blocks)
+		0x8, // Size (in 0x200 byte blocks)
 	};
 
 	size_t i;
-	for (i = 0x0; i < 0x04000000; i += 0x200) {
+	for (i = 0x0; i < 0x04000000; i += 0x1000) {
 		printf("Dumping %07X...\n", i);
 		cmd[1] = i,
 		writeChange(cmd);
 		readChange();
-		fwrite(GBAROM + (0x1000 >> 1), 0x200, 1, f);
+		fwrite(GBAROM + (0x1000 >> 1), 0x1000, 1, f);
 	}
 
 	printf("Done!\n");
